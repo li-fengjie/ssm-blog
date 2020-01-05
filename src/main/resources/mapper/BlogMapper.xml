@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.blog.dao.BlogDao">
+	<resultMap type="blog" id="blogMap">
+		<id property="blogId" column="id"></id>
+		<result property="title" column="title"/>
+		<result property="summary" column="summary"/>
+		<result property="releaseDate" column="releaseDate"/>
+		<result property="clickHit" column="clickHit"/>
+		<result property="replyHit" column="replyHit"/>
+		<result property="content" column="content"/>
+		<result property="keyWord" column="keyWord"/>
+		<result property="typeId" column="type_id"/>
+		<!-- 1对1配置 -->
+		<association property="blogType" column="type_id" javaType="blogType">
+			<id property="id" column="typeid"/>
+			<result property="typeName" column="typeName"/>
+			<result property="orderNum" column="orderNum"/>
+		</association>
+	</resultMap>
+	<!-- 分页查询数据 -->
+	<select id="findByPageBean" resultMap="blogMap" parameterType="Map" >
+		SELECT *,b.id as typeid FROM t_blog a,t_blogtype b WHERE a.type_id=b.id limit #{start},#{size}
+	</select>
+	<!-- 总共的条数  -->
+	<select id="findTotalCount" resultType="Int">
+		select count(*) from t_blog
+	</select>
+	<!-- 根据类型id查询对应的数据 -->
+	<select id="findByTypeId" resultMap="blogMap" parameterType="int" >
+	SELECT a.id,a.title,a.summary,a.clickHit,a.content,b.id as typeid,a.keyword,DATE_FORMAT(releaseDate,'%m月') AS releaseDate FROM t_blog a,t_blogtype b WHERE a.type_id=b.id AND b.id=#{id}
+	</select>
+	<!-- 根据关键字查询对应的博客 -->
+	<select id="findByKeyWord" parameterType="String" resultMap="blogMap" >
+		SELECT id,content,title FROM t_blog WHERE keyWord LIKE '%${value}%'
+	</select>
+	<!-- 根据关键字查询博客的个数 -->
+	<select id="findByKeyWordCount" parameterType="String" resultType="int" >
+		SELECT count(*) FROM t_blog WHERE keyWord LIKE '%${value}%'
+	</select>
+	<!-- 根据关键字查询博客的个数 -->
+	<select id="findById" parameterType="int" resultMap="blogMap">
+		SELECT *,b.id as typeid FROM t_blog a,t_blogtype b WHERE a.type_id=b.id and a.id = #{id}
+	</select>
+    <!-- 查询待审核博客 -->
+    <select id="findAll" parameterType="int" resultMap="blogMap">
+        SELECT * FROM t_blog
+    </select>
+
+	<!-- 添加博客 -->
+	<insert id="saveBlog" parameterType="blog">
+	 insert into t_blog(title,summary,releaseDate,clickHit,replyHit,content,keyWord,type_id) 
+	 value(#{title},#{summary},NOW(),0,0,#{content},#{keyWord},#{blogType.id})
+	</insert>
+</mapper>

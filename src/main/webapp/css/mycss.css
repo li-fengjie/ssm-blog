@@ -1,0 +1,17 @@
+@charset "UTF-8";
+.header,.footer{
+	/*background:pink;*/
+}
+.pagination{
+	    border-top: none;
+}
+.current{
+	 border-top: 1px solid;
+}
+
+/*body{
+		background:url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576660465518&di=f90e6c98eab6ee8279c1a8b59c08baa0&imgtype=0&src=http%3A%2F%2Fpic.soutu123.com%2Fback_pic%2F04%2F02%2F81%2F245805c41a45802.jpg%2521%2Ffw%2F700%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue") no-repeat center center;
+		background-size:100% 100%;
+		background-attachment: fixed;
+		filter:blur(10px)	
+		}*/

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	   http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	   http://www.springframework.org/schema/util
+	   http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+    <!--扫描注解-->
+    <context:component-scan base-package="com.qf.blog">
+        <!--配置不扫描controller注解-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!--mybatis的配置-->
+    <!--加载外部properties文件-->
+    <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:db.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!--配置连接池 数据源 配置c3p0-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc_driverClassName}" />
+        <property name="jdbcUrl" value="${jdbc_url}" />
+        <property name="user" value="${jdbc_username}" />
+        <property name="password" value="${jdbc_password}" />
+    </bean>
+    <!--配置SqlSessionFactory-->
+    <bean id="sessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!--mapper配置文件读取-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+        <!--别名配置-->
+        <property name="typeAliasesPackage" value="com.qf.blog.pojo" />
+    </bean>
+    <!--读取配置-->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qf.blog.dao"/>
+    </bean>
+    <!--事务的配置-->
+    <!--事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--管理datasource-->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--事务通告-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="*" isolation="DEFAULT" />
+        </tx:attributes>
+    </tx:advice>
+    <!--aop事务增强-->
+    <aop:config>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.qf.blog.service.impl.*ServiceImpl.*(..))" />
+    </aop:config>
+
+</beans>

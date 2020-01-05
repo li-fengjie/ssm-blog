@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.blog.dao.BlogTypeDao">
+	<resultMap type="blogType" id="blogTypeMap">
+		<id property="id" column="id"/>
+		<result property="typeName" column="typeName"/>
+		<result property="orderNum" column="orderNum"/>
+	</resultMap>
+	<!-- 查询分类的个数 -->
+	<select id="findByCount" resultType="int">
+		select count(*) from t_blogtype
+	</select>
+	<!-- 查询所有的分类 -->
+	<select id="findTypeAll" resultType="blogType" resultMap="blogTypeMap">
+		select * from t_blogtype
+	</select>
+	<!-- 查询每个分类有多少个博客 -->
+	<select id="findTypeByIdCount" resultType="int">
+		SELECT COUNT(*) FROM t_blog a,t_blogtype b WHERE a.type_id=b.id GROUP BY a.type_id
+	</select>
+</mapper>

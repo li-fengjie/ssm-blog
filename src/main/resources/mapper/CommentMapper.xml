@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.blog.dao.CommentDao">
+
+	<resultMap id="commentMap" type="comment">
+		<id property="id" column="id"/>
+		<result property="userIp" column="userIp"/>
+		<result property="content" column="content"/>
+		<result property="commentDate" column="commentData"/>
+		<result property="state" column="state"/>
+		<result property="blog_id" column="blog_id"/>
+
+		<!-- 1对1配置 -->
+		<association property="blog" column="blog_id" javaType="blog">
+			<id property="blogId" column="id"/>
+			<result property="title" column="title"/>
+		</association>
+
+	</resultMap>
+	<!-- 评论 -->
+	<insert id="save" parameterType="comment">
+		insert into t_comment(userIp,content,commentDate,state,blog_id) value(#{userIp},#{content},NOW(),0,#{blog_id})
+	</insert>
+	<!-- 根据博客id查询所有审核完的评论 -->
+	<select id="findByBlogId" resultType="comment" parameterType="Map" resultMap="commentMap">
+		select *,b.id AS blogid from t_comment,t_blog b where blog_id=#{blogId} and state = 1
+	</select>
+	<!-- 根据博客id查询通过审核评论个数 -->
+	<select id="findByIdCount" resultType="int" parameterType="int">
+		select count(*) from t_comment where blog_id=#{blogId} and state = 1
+	</select>
+	<!-- 查询所有的评论 -->
+	<select id="findAll" resultType="comment">
+		select * from t_comment
+	</select>
+</mapper>

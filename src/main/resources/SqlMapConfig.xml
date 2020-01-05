@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        <!-- 主配置 -->
+        <configuration>
+        <!-- 引用外部的配置文件 -->
+        <properties resource="db.properties"></properties>
+        <!-- 设置别名 -->
+        	<typeAliases>
+        	<!-- 配置单个类的别名
+        	<typeAlias type="com.qf.domain.User" alias="a"/> -->
+        	<!-- 配置包下的别名 别名的名称为当前的类的名称 -->
+        	<package name="com.qf.blog.pojo"/>
+        	</typeAliases>
+        	<!-- 环境配置 -->
+        	<environments default="mysql">
+        		<!-- mysql的环境配置 -->
+        		<environment id="mysql">
+        			<!-- 事务管理器配置 -->
+        			<transactionManager type="JDBC"></transactionManager>
+        			<!-- 数据源配置POOLED 实现了dataSource接口 以池的概念来给连接
+						UNPOOLED 实现了dataSource接口 每次都会去拿新的 实现了dataSource接口
+						JDNI 取决于你当前是用什么服务器 tomcat_dbcp -->
+        			<dataSource type="POOLED">
+        				<property name="driver" value="${jdbc_driverClassName}"/>
+        				<property name="url" value="${jdbc_url}"/>
+        				<property name="username" value="${jdbc_username}"/>
+        				<property name="password" value="${jdbc_password}"/>
+        			</dataSource>
+        		</environment>
+        	</environments>
+        	<!-- 映射文件配置 -->
+        	<mappers>
+        		<!-- 指定单个mapper配置文件的地址 -->
+        		<!--<mapper resource="mapper/BlogMapper.xml"/>-->
+        		 <!--指定整个包为mapper配置文件的地址 会自动去读取包下的配置文件-->
+        		<package name="mapper"/>
+        	</mappers>
+        </configuration>
