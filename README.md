@@ -8,14 +8,6 @@
 软件架构说明
 Spring、SpringMVC、MyBatis
 
-#### 安装教程
-
-1.  tomcat
-
-#### 使用说明
-
-1. 
-
 #### 使用说明
 ![主页面](img/index.png)
 
