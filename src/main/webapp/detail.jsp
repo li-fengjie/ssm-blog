@@ -193,8 +193,8 @@
                                     <div>
                                         <ul class="post-copyright">
                                             <%--<li class="post-copyright-link">--%>
-                                                <%--<strong>本文作者：</strong>--%>
-                                                <%--${blogger.nickname }--%>
+                                            <%--<strong>本文作者：</strong>--%>
+                                            <%--${blogger.nickname }--%>
                                             <%--</li>--%>
                                             <li class="post-copyright-link">
                                                 <strong>本文标题：</strong>

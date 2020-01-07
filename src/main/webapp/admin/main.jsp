@@ -133,7 +133,7 @@
 		    <a href="javascript:openTab('标签管理','linkManage','icon-link')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">标签管理</a>
 			<a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
 			<a href="javascript:refreshSystemCache()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
-			<a href="${pageContext.request.contextPath }/blog/blog/" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">回到主页</a>
+			<a href="${pageContext.request.contextPath }/blog/" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">回到主页</a>
 			<a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'" style="width: 150px;">安全退出</a>
 		</div>
 	</div>

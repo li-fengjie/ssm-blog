@@ -18,7 +18,7 @@
 	
 	function openBlogTypeAddDialog() {
 		$("#dlg").dialog("open").dialog("setTitle", "添加博客类别信息");
-		url = "${pageContext.request.contextPath}/admin/blogType/save.do";
+		url = "${pageContext.request.contextPath}/admin/addBlogType";
 	}
 	
 	function openBlogTypeModifyDialog() {
@@ -30,7 +30,7 @@
 		var row = selectedRows[0];
 		$("#dlg").dialog("open").dialog("setTitle", "修改博客类别信息");
 		$("#fm").form("load", row);//会自动识别name属性，将row中对应的数据，填充到form表单对应的name属性中
-		url = "${pageContext.request.contextPath}/admin/blogType/save.do?id=" + row.id;
+		url = "${pageContext.request.contextPath}/admin/updateBlogType?id=" + row.id;
 	}
 	
 	function saveBlogType() {
@@ -47,6 +47,7 @@
 					$("typeNum").val("");
 					$("#dlg").dialog("close"); //关闭对话框
 					$("#dg").datagrid("reload"); //刷新一下
+                    location.reload();
 				} else {
 					$.messager.alert("系统提示", "博客类别保存失败");
 					return;
@@ -75,13 +76,13 @@
 		var ids = idsStr.join(","); //1,2,3,4
 		$.messager.confirm("系统提示", "<font color=red>您确定要删除选中的"+selectedRows.length+"条数据么？</font>", function(r) {
 			if(r) {
-				$.post("${pageContext.request.contextPath}/admin/blogType/delete.do",
+				$.post("${pageContext.request.contextPath}/admin/deleteBlogType",
 						{ids: ids}, function(result){
 							if(result.exist) {
 								$.messager.alert("系统提示", result.exist);
 							} else if(result.success) {
 								$.messager.alert("系统提示", "数据删除成功！");
-								$("#dg").datagrid("reload");
+                                location.reload();
 							} else {
 								$.messager.alert("系统提示", "数据删除失败！");
 							}
@@ -95,6 +96,7 @@
 	
 	function reload() {
 		$("#dg").datagrid("reload");
+        location.reload();
 	}
 </script>
 
@@ -110,16 +112,17 @@
 			<th field="typeName" align="center">博客分类名称</th>
 			<th field="orderNum" align="center">类别排序</th>
 		</tr>
-
-		<c:forEach items="${blogTypeList}" var="blogType" varStatus="l">
-			<tr>
-				<th field="cb" checkbox="true" align="center"></th>
-				<th field="id" align="center">${l.index}</th>
-				<th field="typeName" align="center">${blogType.typeName}</th>
-				<th field="orderNum" align="center">${blogType.orderNum}</th>
-			</tr>
-		</c:forEach>
 	</thead>
+	<tbody>
+	<c:forEach items="${blogTypeList}" var="blogType" varStatus="l">
+		<tr>
+			<td field="cb" checkbox="true" align="center"></td>
+			<td field="id" align="center">${blogType.id}</td>
+			<td field="typeName" align="center">${blogType.typeName}</td>
+			<td field="orderNum" align="center">${blogType.orderNum}</td>
+		</tr>
+	</c:forEach>
+	</tbody>
 
 </table>
 <div id="tb"> 

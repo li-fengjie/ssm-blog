@@ -108,15 +108,17 @@
 <!-- 			<th field="linkurl" width="200" align="center">友情链接地址</th>  -->
 <!-- 			<th field="orderNum" width="50" align="center">友情链接序号</th>  -->
 		</tr>
-
-		<c:forEach items="${LinkList}" var="link" varStatus="l">
-			<tr>
-				<th field="cb" checkbox="true" align="center"></th>
-				<th field="id" width="20" align="center">${l.index}</th>
-				<th field="linkname" width="100" align="center">${link.linkname}</th>
-			</tr>
-		</c:forEach>
 	</thead>
+	<tbody>
+	<c:forEach items="${LinkList}" var="link" varStatus="l">
+		<tr>
+			<td field="cb" checkbox="true" align="center"></td>
+			<td field="id" width="20" align="center">${l.index}</td>
+			<td field="linkname" width="100" align="center">${link.linkname}</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+
 </table>
 <div id="tb"> 
 	<div>

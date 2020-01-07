@@ -22,9 +22,9 @@
 	}
 	
 	function formatState(val,row) {
-		if(val === 0) {
+		if(val == 0) {
 			return "待审核";
-		} else if(val === 1) {
+		} else if(val == 1) {
 			return "审核通过";
 		} else {
 			return "审核未通过";
@@ -77,19 +77,21 @@
 			<th field="commentDate"align="center">评论日期</th>
 			<th field="state" align="center" formatter="formatState">评论状态</th>
 		</tr>
-		<c:forEach items="${CommentList}" var="comment" varStatus="l">
-			<tr>
-				<th field="cb" checkbox="true" align="center"></th>
-				<th field="id" align="center">${l.index}</th>
-					<%--<th field="blog" width="200" align="center" formatter="formatBlogTitle">博客标题</th>--%>
-				<th field="userIp" align="center">${comment.userIp}</th>
-				<th field="content" align="center">${comment.content}</th>
-				<th field="commentDate" align="center">${comment.commentDate}</th>
-				<th field="state" align="center" formatter="formatState">${comment.state}</th>
-
-			</tr>
-		</c:forEach>
 	</thead>
+	<tbody>
+	<c:forEach items="${CommentList}" var="comment" varStatus="l">
+		<tr>
+			<td field="cb" checkbox="true" align="center"></td>
+			<td field="id" align="center">${comment.id}</td>
+				<%--<th field="blog" width="200" align="center" formatter="formatBlogTitle">博客标题</th>--%>
+			<td field="userIp" align="center">${comment.userIp}</td>
+			<td field="content" align="center">${comment.content}</td>
+			<td field="commentDate" align="center">${comment.commentDate}</td>
+			<td field="state" align="center" formatter="formatState">${comment.state}</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+
 
 
 </table>

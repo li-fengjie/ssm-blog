@@ -11,7 +11,7 @@
         	<!-- 配置单个类的别名
         	<typeAlias type="com.qf.domain.User" alias="a"/> -->
         	<!-- 配置包下的别名 别名的名称为当前的类的名称 -->
-        	<package name="com.qf.blog.pojo"/>
+        	<package name="com.zy.blog.pojo"/>
         	</typeAliases>
         	<!-- 环境配置 -->
         	<environments default="mysql">

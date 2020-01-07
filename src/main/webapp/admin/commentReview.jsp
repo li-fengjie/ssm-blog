@@ -34,7 +34,7 @@
 		var ids = idsStr.join(","); //1,2,3,4
 		$.messager.confirm("系统提示", "<font color=red>您确定如此审核选中的"+selectedRows.length+"条数据吗？</font>", function(r) {
 			if(r) {
-				$.post("${pageContext.request.contextPath}/admin/comment/review.do",
+				$.post("${pageContext.request.contextPath}/admin/comment/review",
 						{ids: ids, state: state}, 
 						function(result){
 							if(result.success) {
@@ -67,23 +67,26 @@
 			<th field="content" align="center">评论内容</th>
 			<th field="commentDate" align="center">评论日期</th>
 		</tr>
-		<c:forEach items="${CommentList}" var="comment" varStatus="l">
-			<tr>
-			<th field="cb" checkbox="true" align="center"></th>
-			<th field="id" align="center">${l.index}</th>
-			<%--<th field="blog" align="center" formatter="formatBlogTitle">${comment.blog.title}</th>--%>
-			<th field="userIp"  align="center">${comment.userIp}</th>
-			<th field="content" align="center">${comment.content}</th>
-			<th field="commentDate" align="center">${comment.commentDate}</th>
-		</tr>
-		</c:forEach>
 	</thead>
+	<tbody>
+	<c:forEach items="${CommentList}" var="comment" varStatus="l">
+		<tr>
+			<td field="cb" checkbox="true" align="center"></td>
+			<td field="id" align="center">${comment.id}</td>
+				<%--<th field="blog" align="center" formatter="formatBlogTitle">${comment.blog.title}</th>--%>
+			<td field="userIp"  align="center">${comment.userIp}</td>
+			<td field="content" align="center">${comment.content}</td>
+			<td field="commentDate" align="center">${comment.commentDate}</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+
 </table>
-<div id="tb"> 
+<div id="tb">
 	<div>
 		<a href="javascript:commentReview(1)" class="easyui-linkbutton" iconCls="icon-ok" plain="true">审核通过</a>
-		<a href="javascript:commentReview(2)" class="easyui-linkbutton" iconCls="icon-no" plain="true">审核不通过</a>	
-		<a href="javascript:reload()" class="easyui-linkbutton" iconCls="icon-reload" plain="true">刷新</a>	
+		<a href="javascript:commentReview(2)" class="easyui-linkbutton" iconCls="icon-no" plain="true">审核不通过</a>
+		<a href="javascript:reload()" class="easyui-linkbutton" iconCls="icon-reload" plain="true">刷新</a>
 	</div>
 </div>
 

@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 	function formatTitle(val, row) {
-		return "<a target='_blank' href='${pageContext.request.contextPath}/blog/articles/"+row.id+".html'>"+val+"</a>";
+		return "<a target='_blank' href='${pageContext.request.contextPath}/blog/articles?id="+row.id+"'>"+val+"</a>";
 	}
 	
 	function formatBlogType(val, row) {
@@ -60,11 +60,12 @@
 			return;
 		}
 		var row = selectedRows[0];
-		window.parent.openTab("修改博客","modifyBlog.jsp?id=" + row.id, "icon-writeblog");
+		window.parent.openTab("修改博客","admin/modifyBlog.jsp?id=" + row.id, "icon-writeblog");
 	}
 	
 	function reload() {
 		$("#dg").datagrid("reload");
+
 	}
 </script>
 
@@ -81,17 +82,18 @@
 			<th field="releaseDate" width="100" align="center">发布日期</th> 
 			<%--<th field="blogType" width="100" align="center" formatter="formatBlogType">博客类型</th>--%>
 		</tr>
-
-		<c:forEach items="${blogList}" var="blog" varStatus="l">
-			<tr>
-				<th field="cb" checkbox="true" align="center"></th>
-				<th field="id" width="20" align="center">${l.index}</th>
-				<th field="title" width="200" formatter="formatTitle">${blog.title}</th>
-				<th field="releaseDate" width="100" align="center">${blog.releaseDate}</th>
-				<%--<th field="blogType" width="100" align="center" formatter="formatBlogType">${blog.blogType}</th>--%>
-			</tr>
-		</c:forEach>
 	</thead>
+	<tbody>
+	<c:forEach items="${blogList}" var="blog" varStatus="l">
+		<tr>
+			<td field="cb" checkbox="true" align="center"></td>
+			<td field="id" width="20" align="center">${l.index}</td>
+			<td field="title" width="200" formatter="formatTitle">${blog.title}</td>
+			<td field="releaseDate" width="100" align="center">${blog.releaseDate}</td>
+				<%--<th field="blogType" width="100" align="center" formatter="formatBlogType">${blog.blogType}</th>--%>
+		</tr>
+	</c:forEach>
+	</tbody>
 </table>
 <div id="tb"> 
 	<div>
