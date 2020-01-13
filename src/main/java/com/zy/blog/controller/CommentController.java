@@ -20,11 +20,9 @@ public class CommentController {
 	@RequestMapping("save")
 	public ModelAndView save(String content,Integer id){
 		ModelAndView mv = new ModelAndView();
-		//?????????
 		try {
 			commentService.saveComment(content,id);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mv.setViewName("detail");

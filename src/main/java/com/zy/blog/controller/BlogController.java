@@ -1,6 +1,5 @@
 package com.zy.blog.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,30 +29,17 @@ public class BlogController {
 	@RequestMapping({"/showIndex","/",""})
 	public ModelAndView showList(Integer curren,Integer size) {
 		ModelAndView mv = new ModelAndView();
-		//????????
 		if(curren==null) {
 			curren = 1;
 		}
 		System.out.println(curren);
 		size = 6;
-		//??????§Ö???? ???????
 		PageBean pageBean= blogService.findByPageBean(curren,size);
 		System.out.println(pageBean);
 		mv.addObject("pageBean",pageBean);
 		mv.setViewName("index");
 		return mv;
 	}
-//
-//	@RequestMapping({"/",""})
-//	public ModelAndView showList(Integer size) {
-//		ModelAndView mv = new ModelAndView();
-//		size = 6;
-//		PageBean pageBean= blogService.findByPageBean(1,size);
-//		System.out.println(pageBean);
-//		mv.addObject("pageBean",pageBean);
-//		mv.setViewName("index");
-//		return mv;
-//	}
 
 	@RequestMapping("/search")
 	public ModelAndView search(String keyWord) {
